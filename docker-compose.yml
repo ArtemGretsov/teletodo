@@ -1,0 +1,14 @@
+version: "3"
+services:
+  postgres:
+    image: postgres:14.2
+    volumes:
+      - ./database:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_USER=teletodo
+      - POSTGRES_PASSWORD=teletodo
+      - POSTGRES_DB=teletodo
+      - TZ=Europe/Moscow
+    ports:
+      - 5432:5432
+
