@@ -10,8 +10,8 @@ type Database struct {
 }
 
 type TelegramBot struct {
-	Token     string            `env:"TELEGRAM_BOT_TOKEN" env-required:"true"`
-	WhiteList TelegramWhiteList `env:"TELEGRAM_WHITE_LIST"`
+	Token     string           `env:"TELEGRAM_BOT_TOKEN" env-required:"true"`
+	WhiteList StringEnumerable `env:"TELEGRAM_WHITE_LIST"`
 }
 
 type Config struct {

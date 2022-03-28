@@ -83,6 +83,8 @@ func (t *Telegram) initRouter() error {
 			return err
 		}
 
+		log.Printf("telegram white list enabled (%s)", t.config.TelegramBot.WhiteList)
+
 		t.bot.Use(middleware.Whitelist(list...))
 	}
 

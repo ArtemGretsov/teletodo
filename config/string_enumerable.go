@@ -7,19 +7,19 @@ import (
 	"github.com/pkg/errors"
 )
 
-type TelegramWhiteList string
+type StringEnumerable string
 
-func (t TelegramWhiteList) Split() []string {
+func (t StringEnumerable) Split() []string {
 	return strings.Split(string(t), ",")
 }
 
-func (t TelegramWhiteList) SplitInt64() (arr []int64, err error) {
+func (t StringEnumerable) SplitInt64() (arr []int64, err error) {
 	list := t.Split()
 
 	for index, item := range list {
 		numberItem, err := strconv.Atoi(item)
 		if err != nil {
-			return nil, errors.Wrapf(err, "parsing white list error (index: %d)", index)
+			return nil, errors.Wrapf(err, "parsing enumerable error (index: %d)", index)
 		}
 
 		arr = append(arr, int64(numberItem))
