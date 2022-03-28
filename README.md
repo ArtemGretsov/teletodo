@@ -1,2 +1,2 @@
 # teletodo
-Todo bot for telegram
+Collaborative real-time note taking bot (Todos) for Telegram
