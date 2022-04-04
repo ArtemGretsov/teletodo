@@ -2,10 +2,10 @@ package main
 
 import (
 	"database/sql"
-	"embed"
 	"log"
 	"os"
 
+	"github.com/ilyakaznacheev/cleanenv"
 	"github.com/pressly/goose/v3"
 
 	"github.com/ArtemGretsov/teletodo/config"
@@ -13,21 +13,18 @@ import (
 	_ "github.com/lib/pq"
 )
 
-var embedMigrations embed.FS
-
 func main() {
-	cfg, err := config.NewConfig()
-	if err != nil {
+	cfg := config.Database{}
+
+	if err := cleanenv.ReadEnv(&cfg); err != nil {
 		log.Fatal(err)
 	}
 
-	db, err := sql.Open("postgres", cfg.Database.DSN)
+	db, err := sql.Open("postgres", cfg.DSN)
 	if err != nil {
 		panic(err)
 	}
 	defer db.Close()
-
-	goose.SetBaseFS(embedMigrations)
 
 	if err := goose.SetDialect("postgres"); err != nil {
 		log.Fatal(err)

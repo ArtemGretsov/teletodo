@@ -11,4 +11,3 @@ services:
       - TZ=Europe/Moscow
     ports:
       - 5432:5432
-
