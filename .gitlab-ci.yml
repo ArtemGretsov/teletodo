@@ -38,7 +38,7 @@ deploy:
       cd /var/app/$CI_COMMIT_REF_SLUG &&
       docker-compose pull &&
       docker-compose stop app &&
-      docker-compose up -d app &&
+      docker-compose up -d &&
       docker logout $CI_REGISTRY
       "
     only:
