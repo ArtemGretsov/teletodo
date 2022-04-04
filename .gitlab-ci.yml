@@ -20,6 +20,9 @@ build:
   script:
     - docker build --pull -t "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG" -f build.Dockerfile .
     - docker push "$CI_REGISTRY_IMAGE:$CI_COMMIT_REF_SLUG"
+  only:
+    - main
+    - develop
 
 deploy:
   stage: deploy
@@ -38,3 +41,6 @@ deploy:
       docker-compose up -d app &&
       docker logout $CI_REGISTRY
       "
+    only:
+      - main
+      - develop
