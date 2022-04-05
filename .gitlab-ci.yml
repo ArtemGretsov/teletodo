@@ -22,7 +22,7 @@ test:
     TELEGRAM_BOT_TOKEN: "token"
     DATABASE_DSN: host=postgres user=teletodo password=teletodo dbname=teletodo port=5432 sslmode=disable TimeZone=Europe/Moscow
   script:
-   - sh ./scripts/wait-for.sh -t 60 postgres:5432
+   - ./scripts/wait-for.sh -t 60 postgres:5432
    - go run ./migrations/migrate.go up
    - go test -race ./...
 
