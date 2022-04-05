@@ -1,17 +1,33 @@
-image: docker:stable
+image: golang:1.17
 
 stages:
   - test
   - build
   - deploy
 
+lint:
+  stage: test
+  script:
+    - curl -sSfL https://raw.githubusercontent.com/golangci/golangci-lint/master/install.sh | sh -s -- -b $(go env GOPATH)/bin v1.45.2
+    - golangci-lint run
+
 test:
- image: golang:1.17
- stage: test
- script:
+  stage: test
+  services:
+   - postgres:14.2
+  variables:
+    POSTGRES_DB: teletodo
+    POSTGRES_USER: teletodo
+    POSTGRES_PASSWORD: teletodo
+    TELEGRAM_BOT_TOKEN: "token"
+    DATABASE_DSN: host=postgres user=teletodo password=teletodo dbname=teletodo port=5432 sslmode=disable TimeZone=Europe/Moscow
+  script:
+   - wait-for -t 60 postgres:5432
+   - go run ./migrations/migrate.go up
    - go test -race ./...
 
 build:
+  image: docker:stable
   stage: build
   services:
     - docker:dind
