@@ -32,7 +32,7 @@ deploy:
     - echo "$SSH_PRIVATE_KEY" | tr -d '\r' | ssh-add -
     - mkdir -p ~/.ssh
     - chmod 700 ~/.ssh
-    - scp -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" ./environment/docker-compose.yml $DEPLOY_USER@$DEPLOY_HOST:/var/app/$CI_COMMIT_REF_SLUG
+    - scp -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" ./environment/docker-compose.env.yml $DEPLOY_USER@$DEPLOY_HOST:/var/app/$CI_COMMIT_REF_SLUG/docker-compose.yml
     - ssh -o "UserKnownHostsFile=/dev/null" -o "StrictHostKeyChecking=no" $DEPLOY_USER@$DEPLOY_HOST "
       echo $CI_REGISTRY_PASSWORD | docker login -u $CI_REGISTRY_USER $CI_REGISTRY --password-stdin &&
       cd /var/app/$CI_COMMIT_REF_SLUG &&
