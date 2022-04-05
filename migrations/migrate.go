@@ -5,7 +5,6 @@ import (
 	"log"
 	"os"
 
-	"github.com/ilyakaznacheev/cleanenv"
 	"github.com/pressly/goose/v3"
 
 	"github.com/ArtemGretsov/teletodo/config"
@@ -14,33 +13,32 @@ import (
 )
 
 func main() {
-	cfg := config.Database{}
-
-	if err := cleanenv.ReadEnv(&cfg); err != nil {
+	cfg, err := config.NewConfig()
+	if err != nil {
 		log.Fatal(err)
 	}
 
-	db, err := sql.Open("postgres", cfg.DSN)
+	db, err := sql.Open("postgres", cfg.Database.DSN)
 	if err != nil {
-		panic(err)
+		log.Fatal(err)
 	}
 	defer db.Close()
 
-	if err := goose.SetDialect("postgres"); err != nil {
+	if err = goose.SetDialect("postgres"); err != nil {
 		log.Fatal(err)
 	}
 
 	switch os.Args[1] {
 	case "up":
-		if err := goose.Up(db, "migrations"); err != nil {
+		if err = goose.Up(db, "migrations"); err != nil {
 			log.Fatal(err)
 		}
 	case "down":
-		if err := goose.Down(db, "migrations"); err != nil {
+		if err = goose.Down(db, "migrations"); err != nil {
 			log.Fatal(err)
 		}
 	case "status":
-		if err := goose.Status(db, "migrations"); err != nil {
+		if err = goose.Status(db, "migrations"); err != nil {
 			log.Fatal(err)
 		}
 	default:

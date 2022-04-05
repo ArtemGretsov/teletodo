@@ -14,21 +14,20 @@ import (
 func main() {
 	cfg, err := config.NewConfig()
 	if err != nil {
-		log.Fatalf("config reading error: %v", err)
+		log.Fatalf("config reading error: %+v", err)
 	}
 
 	db, err := gorm.Open(postgres.Open(cfg.Database.DSN), &gorm.Config{})
 	if err != nil {
-		log.Fatalf("gorm creating error: %v", err)
+		log.Fatalf("gorm creating error: %+v", err)
 	}
 
 	telegramBot, err := telegram.NewTelegram(cfg, usecases.NewUsecases(db))
 	if err != nil {
-		log.Fatalf("telegram bot creating error: %v", err)
+		log.Fatalf("telegram bot creating error: %+v", err)
 	}
 
-	err = telegramBot.Start()
-	if err != nil {
-		log.Fatalf("telegram bot init error: %v", err)
+	if err = telegramBot.Start(); err != nil {
+		log.Fatalf("telegram bot init error: %+v", err)
 	}
 }
