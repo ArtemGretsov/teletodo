@@ -62,7 +62,7 @@ func (t *todo) DeleteByName(ctx context.Context, name string) error {
 }
 
 func (t *todo) CreateMany(ctx context.Context, names []string, authorID uint) (entities.Todos, error) {
-	todos := make(entities.Todos, len(names), len(names))
+	todos := make(entities.Todos, len(names))
 
 	for i, todoName := range names {
 		todos[i] = entities.Todo{Name: todoName, AuthorID: authorID}

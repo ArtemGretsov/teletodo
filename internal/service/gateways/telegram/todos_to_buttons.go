@@ -13,7 +13,7 @@ const EmptyMessage = "Пусто :("
 
 func (t *Telegram) todosToButtons(todos entities.Todos) *telebot.ReplyMarkup {
 	markup := telebot.ReplyMarkup{ResizeKeyboard: true}
-	rows := make([]telebot.Row, len(todos), len(todos))
+	rows := make([]telebot.Row, len(todos))
 
 	if len(todos) == 0 {
 		markup.Reply([]telebot.Row{markup.Row(markup.Text(EmptyMessage))}...)
